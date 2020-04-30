@@ -7,9 +7,11 @@ using namespace std;
 // 2^P > N
 int st[4][(int)1e1]; int P=4, N=1e1;
 void st_init(int* A){
-    mfor(i,0,N)st[0][i]=A[i];
-    mfor(p,1,P)mfor(i,0,N)
-        st[p][i]=op(st[p-1][i],st[p-1][i+(1<<(p-1))]);
+    mfor(i,0,N)
+        st[0][i]=A[i];
+    mfor(p,1,P)
+        mfor(i,0,N)
+            st[p][i]=op(st[p-1][i],st[p-1][i+(1<<(p-1))]);
 }
 int st_query(int l, int r){
     int k=31-__builtin_clz(r-l+1);
