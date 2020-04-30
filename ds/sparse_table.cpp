@@ -4,8 +4,9 @@ using namespace std;
 #define mfor(i,a,b) for(int i=(a);i<(b);i++)
 
 #define op min
+int P=4, N=1e1;
+int st[4][(int)1e1];
 // 2^P > N
-int st[4][(int)1e1]; int P=4, N=1e1;
 void st_init(int* A){
     mfor(i,0,N)
         st[0][i]=A[i];
