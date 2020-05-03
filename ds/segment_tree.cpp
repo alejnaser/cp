@@ -1,10 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// Usage:
-// SegmentTree st(A, op, neut);
-// st.update(idx, val)
-// st.query(left, right)
 struct SegmentTree{
     vector<int>st,A;
     int n,neut,(*op)(int,int);
@@ -41,11 +37,13 @@ struct SegmentTree{
     void update(int i,int k){return update(1,0,n-1,i,k);}
 };
 
-int sum(int a,int b) {return a+b;}
+int _sum(int a, int b) {
+    return a + b;
+}
 
 void solve(){
     vector<int> A = {9, 6, 2, 1, 7, 10, 8, 3, 5, 4};
-    SegmentTree st(A, sum, 0);
+    SegmentTree st(A, _sum, 0);
 
     cout << st.query(0, 4) << '\n';
     cout << st.query(5, 9) << '\n';
@@ -59,9 +57,9 @@ void solve(){
     cout << st.query(0, 9) << '\n';
 }
 
-int main(){
+int main() {
     ios::sync_with_stdio(0);
-    cin.tie(0);
+    cin.tie(0); cout.tie(0);
 
     solve();
     return 0;
