@@ -27,9 +27,9 @@ void solve() {
     vector<int> A = {9, 6, 2, 1, 7, 10, 8, 3, 5, 4};
     SparseTable st(A, _min);
 
-    cout << st.query(0,4) << '\n';
-    cout << st.query(5,9) << '\n';
-    cout << st.query(0,9) << '\n';
+    cout << st.query(0, 4) << '\n';
+    cout << st.query(5, 9) << '\n';
+    cout << st.query(0, 9) << '\n';
 }
 
 int main() {
