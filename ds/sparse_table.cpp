@@ -14,7 +14,7 @@ struct SparseTable{
         for(int i=0;i<N;i++)
             st[0][i]=A[i];
         for(int p=1;p<P;p++)
-            for(int i=0;i<N;i++)
+            for(int i=0;i+(1<<(p-1))<N;i++)
                 st[p][i]=op(st[p-1][i],st[p-1][i+(1<<(p-1))]);
     }
 };
