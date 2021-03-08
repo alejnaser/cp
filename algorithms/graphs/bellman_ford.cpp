@@ -4,6 +4,8 @@ using namespace std;
 #define INF 1e18
 typedef long long ll;
 
+// complexity: O(nm)
+
 void solve() {
     int n, m; cin >> n >> m;
     vector<tuple<int, int, int>> edges;
