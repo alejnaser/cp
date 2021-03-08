@@ -8,14 +8,12 @@ typedef long long ll;
 
 void solve() {
     int n, m; cin >> n >> m;
+    vector<ll> dist(n + 1, INF);
     vector<tuple<int, int, int>> edges;
     for (int i = 0; i < m; i++) {
         int a, b, c; cin >> a >> b >> c;
         edges.push_back({a, b, c});
     }
-    vector<ll> dist(n + 1);
-    for (int i = 1; i <= n; i++)
-        dist[i] = INF;
     dist[1] = 0;
     for (int i = 1; i < n; i++)
         for (auto e : edges) {
