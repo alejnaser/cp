@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// complexity: O(n)
+
 void solve() {
     int succ[7] = {0, 2, 3, 4, 5, 6, 4};
     int a, b, l, x = 1;
