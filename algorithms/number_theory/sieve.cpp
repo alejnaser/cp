@@ -1,43 +1,84 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#define F first
-#define S second
-#define EB emplace_back
 typedef long long ll;
+
+#define sieve_sz 20000005
 vector<int> ps;
- 
+vector<int> sf;
+bitset<sieve_sz + 1> bs;
+
+// complexity: O(n log log n)
+
 void sieve() {
-    bitset<1000005> bs; bs.set();
-    for (ll i = 2; i <= 1000000; i++) 
-        if (bs[i]) {
-            ps.push_back(i);
-            for (ll j = i * i; j <= 1000000; j += i)
-                bs[j] = 0;
+    bs.set();
+    sf.assign(sieve_sz + 1, 0);
+    for (int p = 2; p <= sieve_sz; p++)
+        if (bs[p]) {
+            sf[p] = p;
+            ps.push_back(p);
+            for (ll n = (ll)p * p; n <= sieve_sz; n += p)
+                if (bs[n]) {
+                    bs[n] = 0;
+                    sf[n] = p;
+                }
         }
 }
 
-vector<pair<int, int>> factorize(ll n) {
-    int e;
-    vector<pair<int, int>> f;
-    for (ll p : ps) {
-        if (p * p > n) 
-            break;
-        e = 0;
-        while (n % p == 0) 
-            e++, n /= p;
-        if (e) 
-            f.EB(p, e);
+// complexity:
+// O(sqrt n / log n) but
+// O(log n) if n <= sieve_sz
+
+vector<pair<ll, int>> factorize(ll n) {
+    // n has O(log n) prime factors
+    assert(1 <= n);
+    assert(n <= sieve_sz * (ll)sieve_sz);
+    vector<pair<ll, int>> f;
+    if (n <= sieve_sz) {
+        while (n != 1) {
+            int e = 0;
+            ll p = sf[n];
+            while (n % p == 0) {
+                e++;
+                n /= p;
+            }
+            f.emplace_back(p, e);
+        }
+        return f;
     }
-    if (n > 1) 
-        f.EB(n, 1);
+    for (ll p : ps) {
+        if (p * p > n)
+            break;
+        if (n % p == 0) {
+            int e = 0;
+            while (n % p == 0) {
+                e++;
+                n /= p;
+            }
+            f.emplace_back(p, e);
+        }
+    }
+    if (n > 1)
+        f.emplace_back(n, 1);
     return f;
 }
 
+// complexity: O(sqrt n)
+
+vector<int> divisors(int n) {
+    vector<int> ds;
+    for (int d = 1; d * d <= n; d++)
+        if (n % d == 0) {
+            ds.push_back(d);
+            if (n / d != d)
+                ds.push_back(n / d);
+        }
+    return ds;
+}
+
 void solve() {
-    auto f = factorize(12345678);
-    for (auto p : f)
-        cout << p.F << "^" << p.S << ' ';
+    for (auto [p, e] : factorize(840))
+        cout << p << "^" << e << ' ';
     cout << '\n';
 }
 
