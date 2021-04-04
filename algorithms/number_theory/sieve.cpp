@@ -63,22 +63,50 @@ vector<pair<ll, int>> factorize(ll n) {
     return f;
 }
 
-// complexity: O(sqrt n)
+ll gcd(ll a, ll b) {
+    while (b) {
+        ll t = a % b;
+        a = b;
+        b = t;
+    }
+    return a;
+}
 
-vector<int> divisors(int n) {
-    vector<int> ds;
-    for (int d = 1; d * d <= n; d++)
-        if (n % d == 0) {
-            ds.push_back(d);
-            if (n / d != d)
-                ds.push_back(n / d);
-        }
+// complexity: O(log e)
+
+ll exp(ll a, int e) {
+    ll r = 1;
+    while (e) {
+        if (e & 1)
+            r *= a;
+        a = a * a;
+        e >>= 1;
+    }
+    return r;
+}
+
+// complexity: complexity of factorize + # of divisors of n
+
+vector<ll> divisors(ll n) {
+    auto fac = factorize(n);
+    vector<ll> ds = {1};
+    for (auto [p, a] : fac) {
+        int b = (int)ds.size();
+        for (int i = 0; i < b; i++)
+            for (int e = 1; e <= a; e++)
+                ds.push_back(ds[i] * exp(p, e));
+    }
     return ds;
 }
 
 void solve() {
     for (auto [p, e] : factorize(840))
         cout << p << "^" << e << ' ';
+    cout << '\n';
+    auto ds = divisors(840);
+    sort(ds.begin(), ds.end());
+    for (int d : ds)
+        cout << d << ' ';
     cout << '\n';
 }
 
