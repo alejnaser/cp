@@ -75,14 +75,14 @@ ll gcd(ll a, ll b) {
 // complexity: O(log e)
 
 ll exp(ll a, int e) {
-    ll r = 1;
-    while (e) {
-        if (e & 1)
-            r *= a;
-        a = a * a;
-        e >>= 1;
+    if (e == 0) {
+        return 1;
+    } else if (e % 2) {
+        return a * exp(a, e - 1);
+    } else {
+        ll t = exp(a, e / 2);
+        return t * t;
     }
-    return r;
 }
 
 // complexity: complexity of factorize + # of divisors of n

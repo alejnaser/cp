@@ -1,50 +1,47 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#define ll long long
+typedef long long ll;
 
-ll N = 200005;
 ll p = 998244353;
-vector<ll> F(N);
+vector<ll> f(200005, 1);
 
-void precalc_F() {
-    F[0] = 1;
-    for (ll i = 1; i < N; i++)
-        F[i] = (i * F[i - 1]) % p;
-}
-
-ll exp(ll a, ll e) {
-    ll r = 1;
-    while (e) {
-        if (e & 1)
-            r = (r * a) % p;
-        a = (a * a) % p;
-        e >>= 1;
+ll exp(ll a, int e) {
+    if (e == 0) {
+        return 1;
     }
-    return r;
+    if (e % 2) {
+        return (a * exp(a, e - 1)) % p;
+    } else {
+        ll r = exp(a, e / 2);
+        return (r * r) % p;
+    }
 }
 
 ll inv(ll a) {
     return exp(a, p - 2);
 }
 
-ll choose(ll n, ll k) {
-    return (F[n] * inv((F[n - k] * F[k]) % p)) % p;
+ll C(ll n, ll k) {
+    return (f[n] * inv((f[n - k] * f[k]) % p)) % p;
 }
 
 void solve() {
-    precalc_F();
-    ll n, m; cin >> n >> m;
-    ll r = n - 2;
-    for (int i = 0; i < n - 3; i++) 
-        r = (r * 2) % p;
-    r = (r * choose(m, n - 1)) % p;
+    int n, m;
+    cin >> n >> m;
+    if (n == 2) {
+        cout << "0\n";
+        return;
+    }
+    for (ll i = 1; i <= m; i++)
+        f[i] = (i * f[i - 1]) % p;
+    ll r = (((C(m, n - 1) * (n - 2)) % p) * exp(2, n - 3)) % p;
     cout << r << '\n';
 }
 
 int main() {
     ios::sync_with_stdio(0);
-    cin.tie(0);cout.tie(0);
+    cin.tie(0); cout.tie(0);
     solve();
     return 0;
 }
