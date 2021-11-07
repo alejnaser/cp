@@ -84,15 +84,16 @@ tuple<ll, ll, ll> egcd(ll a, ll b) {
 
 // complexity: O(log e)
 
-ll exp(ll a, int e) {
-    if (e == 0) {
+ll exp(ll n, ll k) {
+    if (k == 0) {
         return 1;
-    } else if (e % 2) {
-        return a * exp(a, e - 1);
-    } else {
-        ll t = exp(a, e / 2);
-        return t * t;
     }
+    ll r = exp(n, k / 2);
+    r = (r * r) % p;
+    if (k & 1) {
+        r = (r * n) % p;
+    }
+    return r;
 }
 
 // complexity: complexity of factorize + # of divisors of n
