@@ -72,6 +72,16 @@ ll gcd(ll a, ll b) {
     return a;
 }
 
+tuple<ll, ll, ll> egcd(ll a, ll b) {
+    if (b == 0) {
+        return {1, 0, a};
+    } else {
+        ll x, y, g;
+        tie(x, y, g) = egcd(b, a % b);
+        return {y, x - (a / b) * y, g};
+    }
+}
+
 // complexity: O(log e)
 
 ll exp(ll a, int e) {
